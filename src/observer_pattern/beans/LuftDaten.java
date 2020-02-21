@@ -1,23 +1,26 @@
 package observer_pattern.beans;
 
+import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
 import java.beans.PropertyChangeSupport;
 
-public class LuftApp {
+public class LuftDaten {
+    private String ort;
     private float feinstaub;
     private float luftfeuchtigkeit;
-    private float stickstoffdioxid;
 
     private PropertyChangeSupport support;
 
-    public LuftApp(float feinstaub, float luftfeuchtigkeit, float stickstoffdioxid) {
+    public LuftDaten(String ort, float feinstaub, float luftfeuchtigkeit) {
+        this.ort = ort;
         this.feinstaub = feinstaub;
         this.luftfeuchtigkeit = luftfeuchtigkeit;
-        this.stickstoffdioxid = stickstoffdioxid;
+
         support = new PropertyChangeSupport(this);
     }
 
     public void addPropertyChangeListener(PropertyChangeListener pcl) {
+
         support.addPropertyChangeListener(pcl);
     }
 
@@ -40,15 +43,8 @@ public class LuftApp {
     }
 
     public void setLuftfeuchtigkeit(float luftfeuchtigkeit) {
+        support.firePropertyChange("luftfeuchtigkeit",this.luftfeuchtigkeit,luftfeuchtigkeit);
         this.luftfeuchtigkeit = luftfeuchtigkeit;
-
     }
 
-    public float getStickstoffdioxid() {
-        return stickstoffdioxid;
-    }
-
-    public void setStickstoffdioxid(float stickstoffdioxid) {
-        this.stickstoffdioxid = stickstoffdioxid;
-    }
 }

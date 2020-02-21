@@ -5,10 +5,14 @@ import java.beans.PropertyChangeListener;
 
 public class Anwender implements PropertyChangeListener {
     private String name;
-    private String nachricht;
+    private float feinstaub;
 
-    public Anwender(String name) {
+    public Anwender() {
+    }
+
+    public Anwender(String name, float feinstaub) {
         this.name = name;
+        this.feinstaub = feinstaub;
     }
 
     public String getName() {
@@ -19,17 +23,24 @@ public class Anwender implements PropertyChangeListener {
         this.name = name;
     }
 
-    public void setNachricht(float feinstaub) {
-        if (feinstaub <= 100) this.nachricht = "Hey "+this.name+" Alles in Ordnung";
-        else this.nachricht = "Hey "+this.name+" Alarm";
+    public float getFeinstaub() {
+        return feinstaub;
     }
 
-    public String getNachricht(){
-        return this.nachricht;
+    public void setFeinstaub(float feinstaub) {
+        this.feinstaub = feinstaub;
+    }
+
+    public void getNachricht() {
+        if (this.feinstaub <= 100)
+            System.out.println("Hey "+this.name+" Alles in Ordnung");
+        else
+            System.out.println("Hey "+this.name+" Alarm");
     }
 
     @Override
     public void propertyChange(PropertyChangeEvent evt) {
-        this.setNachricht((float) evt.getNewValue());
+        if (evt.getPropertyName().equals("feinstaub"))
+            this.setFeinstaub((float) evt.getNewValue());
     }
 }
